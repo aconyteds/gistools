@@ -1,0 +1,11 @@
+.windowsMain{height:100%; cursor:inherit; padding:0 !important;}
+.windowsMain *{overflow:hidden;}
+.windowsMain *.dijitContentPane{padding:0}
+.windowsBtnContainer{left:0 !important; top:0 !important;}
+span.windowsStartBtn{margin:0; height:100%; width:100%}
+span.windowsStartBtn .dijitArrowButtonInner{display: none;}
+
+.windowsMenuBar{background:inherit; border:none;}
+
+.windowsClockContainer{display:table;}
+.windowsClockContainer .clock{display:table-cell; vertical-align:middle; text-align:center; font-size:smaller; padding:0;}

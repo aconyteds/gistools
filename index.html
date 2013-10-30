@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Ian's Training Application</title>
+		<link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.7/js/dojo/dijit/themes/tundra/tundra.css"/>
+		<link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.7/js/dojo/dijit/themes/claro/claro.css"/>
+    	<link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.7/js/esri/css/esri.css" />
+		<script src="//js.arcgis.com/3.7/init.js" data-dojo-config="async:true,
+		dojoBlankHtmlUrl: location.pathname.replace(/\/[^/]+$/, '') +'/resources/blank.html',
+        packages: [ {
+            name: 'custom',
+            location: location.pathname.replace(/\/[^/]+$/, '') + '/custom'
+        } ]"></script>
+		<script src="./resources/main.js"></script>
+		<style>
+			html, body, #layout, #mapContainer, #map{height:100%; width:100%; padding:0; margin:0;}
+		</style>
+  </head>
+  <body class="tundra">
+  	<div id="layout" >
+  		<div id="mapContainer" >
+	    	<div id="map"  >
+	    	</div>
+	    </div>
+    </div>
+  </body>
+</html>
