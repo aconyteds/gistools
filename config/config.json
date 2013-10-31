@@ -1,6 +1,8 @@
 {
 	"title":"Ian's Application",
-	"css":["./resources/base.css"],
+	"themes":[{"name":"claro", "url":"//js.arcgis.com/3.7/js/dojo/dijit/themes/claro/claro.css", "default":false},
+	{"name":"tundra", "url":"//js.arcgis.com/3.7/js/dojo/dijit/themes/tundra/tundra.css", "default":true}],
+	"css":["./resources/base.css", "//js.arcgis.com/3.7/js/esri/css/esri.css"],
 	"ovw":{"attachTo":"bottom-right", "color":"blue", "opacity":".4", "visible":false},
 	"map":{
 		"center":[0,0],

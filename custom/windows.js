@@ -1,11 +1,13 @@
 define(["dojo/dom-construct", "dojox/layout/Dock", "dijit/layout/LayoutContainer", "dijit/layout/ContentPane", "dijit/form/DropDownButton", "dojo/_base/declare",
         "dijit/_WidgetBase","dijit/_TemplatedMixin","dijit/_WidgetsInTemplateMixin", "dojox/timing","dijit/Menu",  "dijit/MenuItem", "dijit/PopupMenuItem", "dijit/CheckedMenuItem",
-        "dijit/RadioMenuItem", "dijit/DropDownMenu", "dojo/_base/lang", "dijit/registry", "dojo/on", "dojo/dom-class", "dojo/text!./windows/windows.html"],
+        "dijit/RadioMenuItem", "dijit/DropDownMenu", "dojo/_base/lang", "dijit/registry", "dojo/on", "dojo/dom-class", "dojo/_base/fx", "dojo/fx/Toggler", "dojo/query", "custom/imw",
+        "dojo/_base/array","dojo/text!./windows/windows.html"],
 		function(domConstruct, dock, layoutContainer, contentPane, dropDownButton, declare,
 				_widgetBase, _templatedMixin, _widgetsInTemplateMixin, time, menu, menuItem, popupMenuItem, checkedMenuItem,
-				radioMenuItem, dropDownMenu, lang, registry, on, domClass, template){
-	domConstruct.create("link",{rel:"stylesheet", type:"text/css", href:"./custom/windows/windows.css"}, document.getElementsByTagName('head')[0]);
-	domConstruct.create("link",{rel:"stylesheet", type:"text/css", href:"//js.arcgis.com/3.7/js/dojo/dojox/layout/resources/ResizeHandle.css"}, document.getElementsByTagName('head')[0]);
+				radioMenuItem, dropDownMenu, lang, registry, on, domClass, fx, toggler, query, imw,
+				array, template){
+	imw.css("./custom/windows/windows.css");
+	imw.css("//js.arcgis.com/3.7/js/dojo/dojox/layout/resources/ResizeHandle.css");
 	return declare([_widgetBase, _templatedMixin, _widgetsInTemplateMixin],{
 		templateString:template,
 		baseClass:"windows",
@@ -27,20 +29,55 @@ define(["dojo/dom-construct", "dojox/layout/Dock", "dijit/layout/LayoutContainer
 			this.mainBtn.set("menu", this.mainMenu);
 			this._initShrink();
 			this._initAppConfig(this._appConfig);
+			this._initMapConfig(this._mapConfig);
+			this._initToolConfig(this._tools);
 		},
 		_initAppConfig:function(items){
 			var theme=new menu();
-            on(new radioMenuItem({label:"Tundra", group:"themeDoctor", checked:true}).placeAt(theme), "change", function(flag){if(flag){domClass.replace(document.body,"tundra", "claro");}});
-            on(new radioMenuItem({label:"Claro", group:"themeDoctor"}).placeAt(theme), "change", function(flag){if(flag){domClass.replace(document.body, "claro", "tundra");}});
+			var themeNames=[];
+			array.map(items.themes, function(t){
+				themeNames.push(t.name);
+				 on(new radioMenuItem({label:t.name.charAt(0).toUpperCase()+t.name.substring(1), group:"themeDoctor", checked:t["default"]}).placeAt(theme), "change", function(flag){
+					 if(flag){domClass.remove(document.body, themeNames);domClass.add(document.body,t.name);}});
+			});
             new popupMenuItem({label:"Theme", popup:theme}).placeAt(this.appMenu);
-            console.log(this);
             on(new checkedMenuItem({label:"Lock Taskbar", checked:this._locked}).placeAt(this.appMenu), "change", lang.hitch(this, function(flag){this._locked=flag; this._lockEvent.remove(); if(!flag){this._modifyHeight("3px");}}));
             if(items.leftPane)
             	new checkedMenuItem({label:"Left Pane", checked:true, onChange:lang.hitch([this, items.leftPane], function(flag){this[0].getParent()[flag?"addChild":"removeChild"](this[1]);})}).placeAt(this.appMenu);
 		},
-		_initMapConfig:function(){
-			
+		_initMapConfig:function(items){
+			if(items.ovw)
+            	on(new checkedMenuItem({checked:true, label:"Overview Map"}).placeAt(this.mapMenu),"change",function(flag){
+            		fx[flag?"fadeIn":"fadeOut"]({node:query(".ovwController")[0], duration:1}).play();
+            		fx[flag?"fadeIn":"fadeOut"]({node:query(".ovwContainer")[0], duration:1}).play();
+            	});
+            if(this._map.isZoomSlider)
+                on(new checkedMenuItem({label:"Zoom Slider", checked:this._map.isZoomSlider}).placeAt(this.mapMenu), "change", lang.hitch(this, function(flag){
+                	console.log(this); this._map[flag?"showZoomSlider":"hideZoomSlider"]();}));
+            if(this._map.isPanArrows)
+                on(new checkedMenuItem({label:"Nav Buttons", checked:this._map.isPanArrows}).placeAt(this.mapMenu), "change", lang.hitch(this, function(flag){
+                	flag?this.map.showPanArrows():this.map.hidePanArrows();}));
+            if(this._map._ogol)
+            {
+                var logo=new toggler({node:this._map._ogol});
+                on(new checkedMenuItem({label:"Logo", checked:true}).placeAt(this.mapMenu), "change", function(flag){flag?logo.show():logo.hide();});
+            }
+            if(query(".esriAttribution").length)
+            {
+                var attribution=new toggler({node:query(".esriAttribution")[0]});
+                on(new checkedMenuItem({label:"Nav Info", checked:true}).placeAt(mapMenu), "change", function(flag){flag?attribution.show():attribution.hide();});
+            }			
 		},
+		_initToolConfig:function(items){
+			array.map(items, lang.hitch(this, function(itm){
+				new this._tool({label:itm.label}).placeAt(this.toolMenu);
+			}));			
+		},
+		_tool:declare([menuItem],{
+			onClick:function(){
+				console.log(this);
+			}
+		}),
 		_initShrink:function()
         {
 			on(this.mainBtn, "click", lang.hitch(this, function(){
@@ -64,8 +101,7 @@ define(["dojo/dom-construct", "dojox/layout/Dock", "dijit/layout/LayoutContainer
             };
             t.start();
             this.clockContainer.addChild(clock);
-        },
-        buildMenu:function(){}
+        }
 	});
 });
 
