@@ -2,8 +2,7 @@
 	height:100%;
 	cursor:inherit; 
 	padding:0 !important;
-	*{overflow:hidden;}
-	*.dijitContentPane{padding:0}
+	*.dijitContentPane{padding:0; overflow:hidden;}
 	.windowsBtnContainer{left:0 !important; top:0 !important;}
 	span.windowsStartBtn{
 		margin:0; 
@@ -11,7 +10,9 @@
 		width:100%;
 		.dijitArrowButtonInner{display: none;}
 	}
-	.windowsMenuBar{background:inherit; border:none;}
+	.middleContainer{top:0 !important;
+		.windowsMenuBar{background:inherit; border:none;}
+	}
 	.windowsClockContainer{display:table;
 	.clock{display:table-cell; vertical-align:middle; text-align:center; font-size:smaller; padding:0;}
 	}

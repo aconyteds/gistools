@@ -1,11 +1,11 @@
 define(["dojo/dom-construct", "dojox/layout/Dock", "dijit/layout/LayoutContainer", "dijit/layout/ContentPane", "dijit/form/DropDownButton", "dojo/_base/declare",
         "dijit/_WidgetBase","dijit/_TemplatedMixin","dijit/_WidgetsInTemplateMixin", "dojox/timing","dijit/Menu",  "dijit/MenuItem", "dijit/PopupMenuItem", "dijit/CheckedMenuItem",
         "dijit/RadioMenuItem", "dijit/DropDownMenu", "dojo/_base/lang", "dijit/registry", "dojo/on", "dojo/dom-class", "dojo/_base/fx", "dojo/fx/Toggler", "dojo/query", "custom/imw",
-        "dojo/_base/array","dojo/text!./windows/windows.html"],
+        "dojo/_base/array","custom/popup","dojo/text!./windows/windows.html"],
 		function(domConstruct, dock, layoutContainer, contentPane, dropDownButton, declare,
 				_widgetBase, _templatedMixin, _widgetsInTemplateMixin, time, menu, menuItem, popupMenuItem, checkedMenuItem,
 				radioMenuItem, dropDownMenu, lang, registry, on, domClass, fx, toggler, query, imw,
-				array, template){
+				array, popup, template){
 	imw.css("./custom/windows/windows.css");
 	imw.css("//js.arcgis.com/3.7/js/dojo/dojox/layout/resources/ResizeHandle.css");
 	return declare([_widgetBase, _templatedMixin, _widgetsInTemplateMixin],{
@@ -24,6 +24,7 @@ define(["dojo/dom-construct", "dojox/layout/Dock", "dijit/layout/LayoutContainer
         	this._tools=params.tools;
         },
 		postCreate:function(){
+			this.dock.startup();
 			this._createTimePiece();
 			this.mainPane.resize();
 			this.mainBtn.set("menu", this.mainMenu);
@@ -70,12 +71,25 @@ define(["dojo/dom-construct", "dojox/layout/Dock", "dijit/layout/LayoutContainer
 		},
 		_initToolConfig:function(items){
 			array.map(items, lang.hitch(this, function(itm){
-				new this._tool({label:itm.label}).placeAt(this.toolMenu);
+				lang.mixin(itm, {dock:this.dock});
+				new this._tool({label:itm.label, opt:itm}).placeAt(this.toolMenu);
 			}));			
 		},
 		_tool:declare([menuItem],{
 			onClick:function(){
-				console.log(this);
+				console.log(this.opt);
+				if(!registry.byId(this.opt.id))
+				{
+					require([this.opt.src], lang.hitch(this, function(typ){
+						var source=new typ(this.opt.params);
+						(new popup({id:this.opt.id, title:this.opt.label, style:"top:50%; left:50%;", dockable:true, dockTo:this.opt.dock,
+							content:source}).placeAt(document.body)).startup();
+						if(source.startup)
+							source.startup();
+					}));
+				}
+				else
+					registry.byId(this.opt.id).show();
 			}
 		}),
 		_initShrink:function()
