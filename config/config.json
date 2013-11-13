@@ -12,11 +12,12 @@
 		"showAttribution":false,
 		"slider":false	
 	},
+	"search":{},
 	"tools":[
-	{"id":"CONTENT", "label":"Content Popup", "src":"dijit/layout/ContentPane", "pinned":true, "params":{"content":"HELLO WORLD"}},
-	{"id":"bmGal", "label":"Basemaps", "src":"custom/basemapGallery", "pinned":false, "params":{}},
-	{"id":"bookmark", "label":"Bookmarks", "src":"custom/Bookmarks","pinned":false, "params":{}}],
+	{"id":"CONTENT", "label":"Content Popup", "src":"dijit/layout/ContentPane", "pinned":false, "params":{"content":"HELLO WORLD"}},
+	{"id":"bmGal", "label":"Basemaps", "src":"custom/basemapGallery", "pinned":true, "params":{"showArcGISBasemaps":true,"style":"width:200px; height:400px;"}},
+	{"id":"bookmark", "label":"Bookmarks", "src":"custom/bookmarks","pinned":false, "params":{"editable":true}}],
 	"imports":[],
-	"layers":[{"url":"http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer", "type":"tiled", "basemap":true, "title":"Imagery"},
-	{"url":"http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer","type":"tiled","basemap":true,"title":"Street Map"}]
+	"layers":[{"url":"http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer", "type":"basemap", "params":{"title":"Imagery"}},
+	{"url":"http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer","type":"basemap", "params":{"title":"Street Map"}}]
 }

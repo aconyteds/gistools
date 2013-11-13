@@ -1,3 +1,0 @@
-.bGal, .bGalOpener, .bGalHolder{position:absolute; z-index:50; right:10px;}
-.bGalOpener{right:10px; top:10px; height:64px; width:64px; background:black; border-radius:10px; z-index:50;}
-.bGalHolder{right:10px; top:76px; height:200px; width:200px; background:black; overflow-y:auto; border-radius:10px; z-index:50;}
