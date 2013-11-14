@@ -73,7 +73,7 @@ define(["dojo/dom-construct", "dojox/layout/Dock", "dijit/layout/LayoutContainer
 			array.map(items, lang.hitch(this, function(itm){
 				lang.mixin(itm, {dock:this.dock});
 				lang.mixin(itm.params, {map:this._map});
-				var tool=new this._tool({opt:itm}).placeAt(this.toolMenu);
+				var tool=new this._tool({label:itm.label, opt:itm}).placeAt(this.toolMenu);
 				if(itm.pinned)
                     tool.createPopup();
 			}));			
