@@ -18,10 +18,10 @@ define(["dojo/dom-construct", "dojox/layout/Dock", "dijit/layout/LayoutContainer
             this.getParent().resize();
         },
         constructor:function(params){
-        	this._map=params.map;
-        	this._appConfig=params.appConfig;
-        	this._mapConfig=params.mapConfig;
-        	this._tools=params.tools;
+            this._map=params.map;
+            this._appConfig=params.appConfig;
+            this._mapConfig=params.mapConfig;
+            this._tools=params.tools;
         },
 		postCreate:function(){
 			this.dock.startup();
@@ -39,7 +39,7 @@ define(["dojo/dom-construct", "dojox/layout/Dock", "dijit/layout/LayoutContainer
 			array.map(items.themes, function(t){
 				themeNames.push(t.name);
 				on(new radioMenuItem({label:t.name.charAt(0).toUpperCase()+t.name.substring(1), group:"themeDoctor", checked:t["default"]}).placeAt(theme), "change", function(flag){
-				    if(flag){domClass.remove(document.body, themeNames);domClass.add(document.body,t.name);}});
+                    if(flag){domClass.remove(document.body, themeNames);domClass.add(document.body,t.name);}});
 			});
             new popupMenuItem({label:"Theme", popup:theme}).placeAt(this.appMenu);
             on(new checkedMenuItem({label:"Lock Taskbar", checked:this._locked}).placeAt(this.appMenu), "change", lang.hitch(this, function(flag){this._locked=flag; this._lockEvent.remove(); if(!flag){this._modifyHeight("3px");}}));
@@ -48,16 +48,16 @@ define(["dojo/dom-construct", "dojox/layout/Dock", "dijit/layout/LayoutContainer
 		},
 		_initMapConfig:function(items){
 			if(items.ovw)
-            	on(new checkedMenuItem({checked:true, label:"Overview Map"}).placeAt(this.mapMenu),"change",function(flag){
-            		fx[flag?"fadeIn":"fadeOut"]({node:query(".ovwController")[0], duration:1}).play();
-            		fx[flag?"fadeIn":"fadeOut"]({node:query(".ovwContainer")[0], duration:1}).play();
-            	});
+                on(new checkedMenuItem({checked:true, label:"Overview Map"}).placeAt(this.mapMenu),"change",function(flag){
+                    fx[flag?"fadeIn":"fadeOut"]({node:query(".ovwController")[0], duration:1}).play();
+                    fx[flag?"fadeIn":"fadeOut"]({node:query(".ovwContainer")[0], duration:1}).play();
+                });
             if(this._map.isZoomSlider)
                 on(new checkedMenuItem({label:"Zoom Slider", checked:this._map.isZoomSlider}).placeAt(this.mapMenu), "change", lang.hitch(this, function(flag){
-                	this._map[flag?"showZoomSlider":"hideZoomSlider"]();}));
+                    this._map[flag?"showZoomSlider":"hideZoomSlider"]();}));
             if(this._map.isPanArrows)
                 on(new checkedMenuItem({label:"Nav Buttons", checked:this._map.isPanArrows}).placeAt(this.mapMenu), "change", lang.hitch(this, function(flag){
-                	flag?this.map.showPanArrows():this.map.hidePanArrows();}));
+                    flag?this.map.showPanArrows():this.map.hidePanArrows();}));
             if(this._map._ogol)
             {
                 var logo=new toggler({node:this._map._ogol});
@@ -66,28 +66,26 @@ define(["dojo/dom-construct", "dojox/layout/Dock", "dijit/layout/LayoutContainer
             if(query(".esriAttribution").length)
             {
                 var attribution=new toggler({node:query(".esriAttribution")[0]});
-                on(new checkedMenuItem({label:"Nav Info", checked:true}).placeAt(mapMenu), "change", function(flag){flag?attribution.show():attribution.hide();});
+                on(new checkedMenuItem({label:"Nav Info", checked:true}).placeAt(this.mapMenu), "change", function(flag){flag?attribution.show():attribution.hide();});
             }			
 		},
 		_initToolConfig:function(items){
 			array.map(items, lang.hitch(this, function(itm){
 				lang.mixin(itm, {dock:this.dock});
 				lang.mixin(itm.params, {map:this._map});
-				var tool=new this._tool({label:itm.label, opt:itm}).placeAt(this.toolMenu);
+				var tool=new this._tool({opt:itm}).placeAt(this.toolMenu);
 				if(itm.pinned)
-				    tool.createPopup();
+                    tool.createPopup();
 			}));			
 		},
 		_tool:declare([menuItem],{
-		    createPopup:function(){
+            createPopup:function(){
 				if(!registry.byId(this.opt.id))
 				{
 					require([this.opt.src], lang.hitch(this, function(typ){
-						var source=new typ(this.opt.params);
+                        var source=new typ(this.opt.params);
 						(new popup({id:this.opt.id, title:this.opt.label, style:"top:100px; left:100px;", dockable:true, dockTo:this.opt.dock, content:source}).placeAt(document.body)).startup();
-						if(source.startup)
-							source.startup();
-					    
+						source.startup();
 					}));
 				}
 				else

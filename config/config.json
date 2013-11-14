@@ -18,6 +18,8 @@
 	{"id":"bmGal", "label":"Basemaps", "src":"custom/basemapGallery", "pinned":true, "params":{"showArcGISBasemaps":true,"style":"width:200px; height:400px;"}},
 	{"id":"bookmark", "label":"Bookmarks", "src":"custom/bookmarks","pinned":false, "params":{"editable":true}}],
 	"imports":[],
-	"layers":[{"url":"http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer", "type":"basemap", "params":{"title":"Imagery"}},
-	{"url":"http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer","type":"basemap", "params":{"title":"Street Map"}}]
+	"layers":[{"url":"http://server.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer", "type":"basemap", "params":{"title":"Topo Map"}},
+	{"url":"http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer","type":"tiled", "params":{"visible":false, "title":"Street Map"}},
+	{"url":"http://server.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_Median_Net_Worth/MapServer", "type":"dynamic", "params":{"visible":false, "title":"USA Median Net Worth"}},
+	{"url":"http://sampleserver6.arcgisonline.com/arcgis/rest/services/Toronto/ImageServer", "type":"image", "params":{"visible":false, "title":"Toronto Image Server"}}]
 }
