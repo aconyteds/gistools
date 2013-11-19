@@ -84,8 +84,9 @@ define(["dojo/dom-construct", "dojox/layout/Dock", "dijit/layout/LayoutContainer
 				{
 					require([this.opt.src], lang.hitch(this, function(typ){
                         var source=new typ(this.opt.params);
-						(new popup({id:this.opt.id, title:this.opt.label, style:"top:100px; left:100px;", dockable:true, dockTo:this.opt.dock, content:source}).placeAt(document.body)).startup();
-						source.startup();
+						var pup=new popup({id:this.opt.id, title:this.opt.label, style:"top:100px; left:100px;", dockable:true, dockTo:this.opt.dock, content:source}).placeAt(document.body);
+						pup.startup();
+						//source.startup();
 					}));
 				}
 				else

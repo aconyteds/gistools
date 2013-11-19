@@ -3,6 +3,7 @@ define(["custom/imw", "esri/dijit/BasemapGallery", "esri/dijit/Basemap","dojo/_b
 function(imw, basemapGallery, basemap, array, basemapLayer, declare, domConstruct, topic, lang, _widgetBase, contentPane){
 	return declare([_widgetBase],{
         basemaps:[],
+        bmGallery:null,
         postCreate:function(){
             var bms=[];
             imw.getRemoteValue("Layers/type", function(arr){
@@ -15,11 +16,13 @@ function(imw, basemapGallery, basemap, array, basemapLayer, declare, domConstruc
                 });
             }, "basemap");
             this.basemaps=bms;
-            var ourGal= new basemapGallery(this.params).placeAt(this);
-            ourGal.startup();
-            array.map(this.basemaps, function(bm){
-                ourGal.add(bm);
-            });
+        },
+        startup:function(){
+            this.bmGallery=new basemapGallery(this.params).placeAt(this);
+            this.bmGallery.startup();
+            array.map(this.basemaps, lang.hitch(this, function(bm){
+                this.basemapGallery.add(bm);
+            }));
         }
 	});	
 });
