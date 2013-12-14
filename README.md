@@ -1,6 +1,7 @@
 # Training Plan
 
-**Overview:** This application is meant as a tool to keep skills up to date and learn new technologies. First and foremost this is a GIS application. Utilizing [ESRI](http://www.esri.com/) technologies to build a "one stop shop" application.
+**Overview:** This application is meant as a tool to keep skills up to date and learn new technologies. 
+First and foremost this is a web based application Utilizing [ESRI](http://www.esri.com/) web technologies to create a "one stop shop", fully customizable, user friendly GIS web interface.
 
 ## Technologies
 
@@ -35,17 +36,20 @@ Modify ./config/config.json for a truly customized experience.
 5. [x] Overview Map with Basemap Sync
 6. [] dojox/FloatingPane maximize/restore button
 7. [] Basemap Gallery
-8. [] Layer loader
+8. [x] Layer loader
 9. [] Table of contents
-10. [] Dynamic Layer Loading
+10. [x] Dynamic Layer Loading
 11. [] Loading Bar for map pan
 12. [] Routing application
 13. [] Search Bar
+14. [] Identity manager for secured layers
 
 ## Known Bugs:
 - **11.19.13** dojox/FloatingPane docking does not work with current version of ESRI js API becuse of typo in dock code
 - ~~**11.19.13** Sometimes when a floating pane is opened and the window is resized the floating pane dissapears.~~ 
     - **Fixed 11.20.13:** by modifying the resize function in a custom widget
+- **12.14.13** Layers cannot be loaded via HTTP when hosted on cloud 9
+- **12.14.13** Basemap Gallery is not working due to http/https issues
 
 [core]: https://github.com/dojo/dojo
 [API Documentation]: http://dojotoolkit.org/api/

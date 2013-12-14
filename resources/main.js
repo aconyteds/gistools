@@ -1,6 +1,6 @@
 require(["esri/map",'dojo/_base/xhr', "dojo/parser","dojo/dom-construct", "dojo/_base/array", "dojo/_base/lang", "dijit/layout/BorderContainer", "dijit/layout/ContentPane",
-         "custom/imw", "dojo/dom-attr", "custom/layers", "dojo/topic", "dojo/domReady!"], 
-function (Map, xhr, parser,domConstruct,array, lang, borderContainer, contentPane, imw, domAttr, layers, topic) 
+         "custom/imw", "dojo/dom-attr", "custom/layers", "dojo/topic", "dojo/on", "custom/loading", "dojo/domReady!"], 
+function (Map, xhr, parser,domConstruct,array, lang, borderContainer, contentPane, imw, domAttr, layers, topic, on, loading) 
 {
 	xhr.get({url:"config/config.json", handleAs:"json",load: function(data)
 	{
@@ -19,7 +19,9 @@ function (Map, xhr, parser,domConstruct,array, lang, borderContainer, contentPan
         main.layout=new borderContainer({gutters:false}, "layout");
 		main.layout.startup();
 		new contentPane({region:"center"}, "mapContainer");
-		main.map=new Map("map", data.map);	
+		main.map=new Map("map", data.map);
+		var loadingIndicator=new loading({style:"width:100px; height:15px; position:fixed; top:50%; left:50%; margin-left:-50px; margin-top:-7.5px;"}).placeAt("mapContainer", "last");
+		loadingIndicator.startup();
 		if(data.ovw)
 		{
 			require(["custom/overview"], function(overview){
@@ -42,6 +44,6 @@ function (Map, xhr, parser,domConstruct,array, lang, borderContainer, contentPan
 	    array.map(data.layers, function(lyr){
             topic.publish("new/Layer", lyr.url, lyr.params, lyr.type, lyr);
 	    });
-		console.log(main);
+		//console.log(main);
 	});
 });
