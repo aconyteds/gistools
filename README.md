@@ -39,10 +39,11 @@ Modify ./config/config.json for a truly customized experience.
 8. [x] Layer loader
 9. [] Table of contents
 10. [x] Dynamic Layer Loading
-11. [] Loading Bar for map pan
+11. [x] Loading Bar for map pan
 12. [] Routing application
 13. [] Search Bar
 14. [] Identity manager for secured layers
+15. [] Figure out how to use CORS better
 
 ## Known Bugs:
 - **11.19.13** dojox/FloatingPane docking does not work with current version of ESRI js API becuse of typo in dock code
@@ -50,6 +51,9 @@ Modify ./config/config.json for a truly customized experience.
     - **Fixed 11.20.13:** by modifying the resize function in a custom widget
 - **12.14.13** Layers cannot be loaded via HTTP when hosted on cloud 9
 - **12.14.13** Basemap Gallery is not working due to http/https issues
+
+### Improvements:
+- Loading bar should have a scrolling background to indicate it is still doing something on longer loads
 
 [core]: https://github.com/dojo/dojo
 [API Documentation]: http://dojotoolkit.org/api/
