@@ -1,0 +1,26 @@
+{
+  "name": "gistools",
+  "version": "0.0.1",
+  "description": "Ian Wilson's Training Plan Application",
+  "main": "server.js",
+  "dependencies": {
+    "path": "~0.4.9",
+    "express": "~3.4.8",
+    "http": "~0.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aconyteds/gistools.git"
+  },
+  "author": "Ian Wilson",
+  "license": "None",
+  "bugs": {
+    "url": "https://github.com/aconyteds/gistools/issues"
+  },
+  "homepage": "https://github.com/aconyteds/gistools"
+}

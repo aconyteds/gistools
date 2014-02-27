@@ -18,7 +18,6 @@ Modify ./config/config.json for a truly customized experience.
 
 ## Development
 **Hopes and Dreams:** Here is a list of what I hope to incorporate.
-* Node.js
 * Web Sockets
 * Routing
 * Automatic Layer Loading
@@ -27,6 +26,12 @@ Modify ./config/config.json for a truly customized experience.
 * Database integration
 * Mobile Optimization
 * Incorporate portal functionality
+
+### Node.js
+
+    npm install
+    node server [-port xxxx]
+    # open browser to http://localhost:xxxx
 
 ## Tasks:
 1. [x] CSS selection in menu
