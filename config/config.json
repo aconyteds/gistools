@@ -1,21 +1,22 @@
 {
 	"title":"Ian's Application",
-	"themes":[{"name":"claro", "url":"//js.arcgis.com/3.7/js/dojo/dijit/themes/claro/claro.css", "default":false},
-	{"name":"tundra", "url":"//js.arcgis.com/3.7/js/dojo/dijit/themes/tundra/tundra.css", "default":true}],
-	"css":["./resources/base.css", "//js.arcgis.com/3.7/js/esri/css/esri.css"],
+	"themes":[{"name":"claro", "url":"//js.arcgis.com/3.10/js/dojo/dijit/themes/claro/claro.css", "default":false},
+	{"name":"tundra", "url":"//js.arcgis.com/3.10/js/dojo/dijit/themes/tundra/tundra.css", "default":true}],
+	"css":["./resources/base.css", "//js.arcgis.com/3.10/js/esri/css/esri.css"],
 	"ovw":{"attachTo":"bottom-right", "color":"blue", "opacity":".4", "visible":false},
 	"map":{
 		"center":[0,0],
-		"basemap":"streets",
+		"basemap":"hybrid",
 		"zoom":3,
 		"logo":false,
 		"showAttribution":false,
 		"slider":false	
 	},
+	"loadingIndicator":{"visible":true},
 	"search":{},
 	"tools":[
 	{"id":"CONTENT", "label":"Content Popup", "src":"dijit/layout/ContentPane", "pinned":false, "params":{"content":"HELLO WORLD"}},
-	{"id":"bmGal", "label":"Basemaps", "src":"custom/basemapGallery", "pinned":true, "params":{"showArcGISBasemaps":true,"style":"width:200px; height:400px;"}},
+	{"id":"bmGal", "label":"Basemaps", "src":"custom/basemapGallery", "pinned":true, "params":{"showArcGISBasemaps":true,"style":"width:300px; height:400px; overflow-x:hidden;"}},
 	{"id":"bookmark", "label":"Bookmarks", "src":"custom/bookmarks","pinned":false, "params":{"editable":true}}],
 	"imports":[],
 	"layers":[{"url":"//server.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer", "type":"basemap", "params":{"title":"Topo Map"}},

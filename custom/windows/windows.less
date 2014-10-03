@@ -1,19 +1,30 @@
-.windowsMain{
-	height:100%;
-	cursor:inherit; 
-	padding:0 !important;
-	*.dijitContentPane{padding:0; overflow:hidden;}
-	.windowsBtnContainer{left:0 !important; top:0 !important;}
-	span.windowsStartBtn{
-		margin:0; 
-		height:100%; 
-		width:100%;
-		.dijitArrowButtonInner{display: none;}
-	}
-	.middleContainer{top:0 !important;
-		.windowsMenuBar{background:inherit; border:none;}
-	}
-	.windowsClockContainer{display:table;
-	.clock{display:table-cell; vertical-align:middle; text-align:center; font-size:smaller; padding:0;}
+.windows{
+	margin-bottom:-4px !important;
+	.windowsMain{
+		height:100%;
+		cursor:inherit; 
+		padding:0 !important;
+		*.dijitContentPane{padding:0; overflow:hidden;}
+		.windowsBtnContainer{left:0 !important; top:0 !important;}
+		span.windowsStartBtn{
+			margin:0; 
+			height:100%; 
+			width:100%;
+			.dijitArrowButtonInner{display: none;}
+		}
+		.middleContainer{top:0 !important;
+			.windowsMenuBar{background:inherit; border:none;}
+		}
+		.windowsClockContainer{display:table;
+		.clock{display:table-cell; vertical-align:middle; text-align:center; font-size:smaller; padding:0;}
+		}
+		.dojoxDock{
+			padding-top:1px;
+			height:30px !important;
+			.dojoxDockNode{
+				height:100%;
+			}
+		}
+		
 	}
 }

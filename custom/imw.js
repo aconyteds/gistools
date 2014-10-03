@@ -6,7 +6,7 @@ define(["dojo/dom-construct", "dojo/topic", "dojo/_base/array"], function(domCon
 		top:function(a){
             return a[a.length-1];
 		},
-		remArr:function(arr, val, rec)
+		remArr:function(arr, val, rec)//target array, value to remove, recursive flag
 		{
             do
             {
@@ -17,8 +17,8 @@ define(["dojo/dom-construct", "dojo/topic", "dojo/_base/array"], function(domCon
 		},
 		getRemoteValue:function(method, callback, prop1, prop2, prop3, prop4)
 		{
-		    var tempTpc=topic.subscribe("return/"+method, function(){tempTpc.remove(); console.log(arguments); callback(arguments); });
-	        topic.publish("get/"+method, prop1, prop2||null, prop3||null, prop4||null);
+            var tempTpc=topic.subscribe("return/"+method, function(){tempTpc.remove(); console.log(arguments); callback(arguments); });
+            topic.publish("get/"+method, prop1, prop2||null, prop3||null, prop4||null);
 		}
 	};
 });

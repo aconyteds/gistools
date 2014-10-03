@@ -6,13 +6,24 @@ function(imw, basemapGallery, basemap, array, basemapLayer, declare, domConstruc
         bmGallery:null,
         postCreate:function(){
             var bms=[];
-            imw.getRemoteValue("Layers/type", lang.hitch(this, function(arr){
-                //console.log(arr);
+            imw.getRemoteValue("layers/type", lang.hitch(this, function(arr){
+                console.log(arr);
                 array.map(arr, lang.hitch(this, function(bm){
                     bms.push(this.createBasemap(bm));
                 }));
             }), "basemap");
             this.basemaps=bms;
+            var hold=domConstruct.create("div", {style:this.sytle});
+            domConstruct.place(hold,this.domNode) 
+            this.bmGallery=new basemapGallery(this.params, hold).startup();
+            //this.bmGallery.startup();
+            array.map(this.basemaps, lang.hitch(this, function(bm){
+                console.log(bm);
+                this.basemapGallery.add(bm);
+            }));
+            topic.subscribe("new/basemap", lang.hitch(this, function(bm){
+                this.bmGallery.add(this.createBasemap(bm));
+            }));
         },
         createBasemap:function(bm){
             return new basemap({
@@ -20,17 +31,6 @@ function(imw, basemapGallery, basemap, array, basemapLayer, declare, domConstruc
                 title:bm.src.title,
                 thumbnail:bm.src.thumbnail||""
             });
-        },
-        startup:function(){
-            this.bmGallery=new basemapGallery(this.params).placeAt(this.domNode);
-            this.bmGallery.startup();
-            array.map(this.basemaps, lang.hitch(this, function(bm){
-                console.log(bm);
-                this.basemapGallery.add(bm);
-            }));
-            topic.subscribe("new/Basemap", lang.hitch(this, function(bm){
-                this.basemapGallery.add(this.createBasemap(bm));
-            }));
         }
 	});	
 });

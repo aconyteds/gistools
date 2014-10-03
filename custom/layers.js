@@ -9,38 +9,53 @@ function(declare, imw, dynamicLayer, imageLayer, tiledLayer, featureLayer, kmlLa
         },
         postCreate:function(){
             on(this.params.map, "layer-add", function(layer){
-                topic.publish("map/Layer/add", layer.layer);
-    		});
-    		on(this.params.map, "layer-remove", function(layer){
-                topic.publish("map/Layer/remove", layer.layer);
-    		});
-    		on(this.params.map, "update-start", function(){
+                topic.publish("map/layer/add", layer.layer);
+                var uHandler=on(layer.layer, "update-start", function(){
+                    topic.publish("layer/update/start", layer.layer);
+                    topic.subscribe("map/layer/remove", function(data){
+                        if(data===layer.layer)
+                            uHandler.remove();
+                    });
+                });
+            });
+            on(this.params.map, "layer-remove", function(layer){
+                topic.publish("map/layer/remove", layer.layer);
+            });
+            on(this.params.map, "update-start", function(){
                 topic.publish("map/update/start", this);
-    		});
-    		on(this.params.map, "update-end", function(){
+            });
+            on(this.params.map, "update-end", function(){
                 topic.publish("map/update/end", this);
-    		});
-            topic.subscribe("new/Layer", lang.hitch(this, function(url, params, type, source){
+            });
+            topic.subscribe("new/layer", lang.hitch(this, function(url, params, type, source){
                 if (type!=="basemap") {
                     this.buildLayer(url, params||null, type||null);
                 }
                 else
                 {
                     this.layers.push({layer:url, type:type, params:params, src:source});
-                    topic.publish("new/Basemap", imw.top(this.layers));
+                    topic.publish("new/basemap", imw.top(this.layers));
                 }
             }));
-            topic.subscribe("get/Layer/type", lang.hitch(this, function(type){
+            topic.subscribe("get/layer/total", lang.hitch(this, function(){
+                return this.layers.length;
+            }));
+            topic.subscribe("get/layer/type", lang.hitch(this, function(type){
                 var LYRS=array.map(this.layers, function(lyr){
                     if(lyr.type==type)
                         return lyr;
                 });
-                topic.publish("return/Layer/type", LYRS);
+                topic.publish("return/layer/type", LYRS);
             }));
-            topic.subscribe("get/Layer/index", lang.hitch(this, function(index){
+            topic.subscribe("get/layer/index", lang.hitch(this, function(index){
                 var LYRS=this.layers[index];
-                topic.publish("return/Layer/index", LYRS);
+                topic.publish("return/layer/index", LYRS);
             }));
+            topic.subscribe("layer/update/start", function(layer){
+                on.once(layer, "update-end", function(){
+                    topic.publish("layer/update/end", layer);
+                });
+            });
         },
         _layerType:function(type){
             switch(type.toLowerCase())

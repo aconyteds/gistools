@@ -7,7 +7,7 @@ define(["dojo/dom-construct", "dojox/layout/Dock", "dijit/layout/LayoutContainer
 				radioMenuItem, dropDownMenu, lang, registry, on, domClass, fx, toggler, query, imw,
 				array, popup, searchBar, template){
 	imw.css("./custom/windows/windows.css");
-	imw.css("//js.arcgis.com/3.7/js/dojo/dojox/layout/resources/ResizeHandle.css");
+	imw.css("//js.arcgis.com/3.10/js/dojo/dojox/layout/resources/ResizeHandle.css");
 	return declare([_widgetBase, _templatedMixin, _widgetsInTemplateMixin],{
 		templateString:template,
 		baseClass:"windows",
@@ -84,13 +84,13 @@ define(["dojo/dom-construct", "dojox/layout/Dock", "dijit/layout/LayoutContainer
 				{
 					require([this.opt.src], lang.hitch(this, function(typ){
                         var source=new typ(this.opt.params);
-						var pup=new popup({id:this.opt.id, title:this.opt.label, style:"top:100px; left:100px;", dockable:true, dockTo:this.opt.dock, content:source}).placeAt(document.body);
+						var pup=new popup({id:this.opt.id, title:this.opt.label, style:"top:100px; left:100px;", dockable:true, dockTo:this.opt.dock, content:source.domNode}).placeAt(document.body);
 						pup.startup();
-						//source.startup();
+						source.startup();
 					}));
 				}
 				else
-					registry.byId(this.opt.id).show();
+					registry.byId(this.opt.id).show().resize();
 			},
 			onClick:function(){this.createPopup();}
 		}),
@@ -113,7 +113,7 @@ define(["dojo/dom-construct", "dojox/layout/Dock", "dijit/layout/LayoutContainer
             var clock = new contentPane({class:"clock", width:"75px"});
             var t =new time.Timer(1000);
             t.onTick=function(){
-                clock.setContent(new Date().toLocaleTimeString());
+                clock.set("content", new Date().toLocaleTimeString());
             };
             t.start();
             this.clockContainer.addChild(clock);

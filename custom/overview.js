@@ -8,7 +8,7 @@ define(["esri/dijit/OverviewMap", "dojo/_base/declare", "dojo/on", "dojo/query",
 		},
 		initDblClickHandler:function(){
 			on(query(".ovwHighlight")[0],"dblclick", lang.hitch(this,function(){
-				var newParams=lang.mixin(this._params, {"visible":this.attr("visible")});
+				var newParams=lang.mixin(this._params, {"visible":this.get("visible")});
 				this.destroy();
 				require(["custom/overview"], function(overview){
 					var newmap= new overview(newParams);

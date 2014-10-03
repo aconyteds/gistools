@@ -15,13 +15,16 @@ function (Map, xhr, parser,domConstruct,array, lang, borderContainer, contentPan
 		});
 	}}).then(function(data)
 	{
-        var main={};
+		var main={};
         main.layout=new borderContainer({gutters:false}, "layout");
 		main.layout.startup();
 		new contentPane({region:"center"}, "mapContainer");
 		main.map=new Map("map", data.map);
-		var loadingIndicator=new loading({style:"width:100px; height:15px; position:fixed; top:50%; left:50%; margin-left:-50px; margin-top:-7.5px;"}).placeAt("mapContainer", "last");
-		loadingIndicator.startup();
+		if(data.loadingIndicator.visible===true)
+		{
+            var loadingIndicator=new loading().placeAt("mapContainer", "last");
+            loadingIndicator.startup();
+		}
 		if(data.ovw)
 		{
 			require(["custom/overview"], function(overview){
@@ -38,11 +41,11 @@ function (Map, xhr, parser,domConstruct,array, lang, borderContainer, contentPan
 				leftPane:new contentPane({region:"left", splitter:true, content:"PANE"}).placeAt(main.layout)},
 				map:main.map,
 				mapConfig:{ovw:data.ovw||null},
-				tools:data.tools}).placeAt(main.layout);
-		});
+				tools:data.tools}).placeAt(main.layout).startup();
+		})
 		main.layerHandler=new layers({map:main.map});
 	    array.map(data.layers, function(lyr){
-            topic.publish("new/Layer", lyr.url, lyr.params, lyr.type, lyr);
+            topic.publish("new/layer", lyr.url, lyr.params, lyr.type, lyr);
 	    });
 		//console.log(main);
 	});
