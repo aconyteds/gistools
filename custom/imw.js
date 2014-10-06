@@ -19,6 +19,14 @@ define(["dojo/dom-construct", "dojo/topic", "dojo/_base/array"], function(domCon
 		{
             var tempTpc=topic.subscribe("return/"+method, function(){tempTpc.remove(); console.log(arguments); callback(arguments); });
             topic.publish("get/"+method, prop1, prop2||null, prop3||null, prop4||null);
+		},
+		parseContent:function(type, params, callback, srcNode){
+			function buildObj(cb){
+				require([type], function(typ){
+	                cb(new typ(params, srcNode||null));
+				});
+			}
+			buildObj(callback);
 		}
 	};
 });

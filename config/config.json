@@ -1,7 +1,9 @@
 {
 	"title":"Ian's Application",
-	"themes":[{"name":"claro", "url":"//js.arcgis.com/3.10/js/dojo/dijit/themes/claro/claro.css", "default":false},
-	{"name":"tundra", "url":"//js.arcgis.com/3.10/js/dojo/dijit/themes/tundra/tundra.css", "default":true}],
+	"themes":[
+		{"name":"claro", "url":"//js.arcgis.com/3.10/js/dojo/dijit/themes/claro/claro.css", "default":false},
+		{"name":"tundra", "url":"//js.arcgis.com/3.10/js/dojo/dijit/themes/tundra/tundra.css", "default":true}
+	],
 	"css":["./resources/base.css", "//js.arcgis.com/3.10/js/esri/css/esri.css"],
 	"ovw":{"attachTo":"bottom-right", "color":"blue", "opacity":".4", "visible":false},
 	"map":{
@@ -15,14 +17,25 @@
 	"loadingIndicator":{"visible":true},
 	"search":{},
 	"tools":[
-	{"id":"CONTENT", "label":"Content Popup", "src":"dijit/layout/ContentPane", "pinned":false, "params":{"content":"HELLO WORLD"}},
-	{"id":"bmGal", "label":"Basemaps", "src":"custom/basemapGallery", "pinned":false, "popup":{"style":"height:400px; width:300px; overflow-x:hidden;"}, "params":{"showArcGISBasemaps":true}},
-	{"id":"bookmark", "label":"Bookmarks", "src":"custom/bookmarks","pinned":false, "popup":{"style":"height:300px; width:235px; overflow-y:auto; overflow-x:hidden;"}, "params":{"editable":true, "bookmarks":[], "style":"border:none;"}},
-	{"id":"bm2", "label":"Esri BM", "src":"esri/dijit/Bookmarks", "pinned":false, "popup":{"style":"height:300px; width:235px; overflow-y:auto; overflow-x:hidden;"},"params":{"editable":true}}],
+		{"id":"CONTENT", "label":"Content Popup", "src":"dijit/layout/ContentPane", "pinned":false, "params":{"content":"HELLO WORLD"}},
+		{"id":"bmGal", "label":"Basemaps", "src":"custom/basemapGallery", "pinned":false, "popup":{"style":"height:400px; width:300px; overflow-x:hidden;"}, "params":{"showArcGISBasemaps":true}},
+		{"id":"bookmark", "label":"Bookmarks", "src":"custom/bookmarks","pinned":false, "popup":{"style":"height:300px; width:235px; overflow-y:auto; overflow-x:hidden;"}, "params":{"editable":true, "bookmarks":[], "style":"border:none;"}},
+		{"id":"bm2", "label":"Esri BM", "src":"esri/dijit/Bookmarks", "pinned":false, "popup":{"style":"height:300px; width:235px; overflow-y:auto; overflow-x:hidden;"},"params":{"editable":true}}
+	],
 	"imports":[],
-	"layers":[{"url":"//server.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer", "type":"basemap", "params":{"title":"Topo Map"}},
-	{"url":"//server.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_Median_Net_Worth/MapServer",  "params":{"visible":true, "title":"USA Median Net Worth"}},
-	{"url":"//sampleserver6.arcgisonline.com/arcgis/rest/services/Toronto/ImageServer", "params":{"visible":true, "title":"Toronto Image Server"}},
-	{"url":"//server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer", "params":{"visible":false, "title":"Street Map"}},
-	{"url":"//server.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_Median_Net_Worth/MapServer/4", "params":{"visible":true, "title":"feature"}}]
+	"layers":[
+		{"url":"//server.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer", "type":"basemap", "params":{"title":"Topo Map"}},
+		{"url":"//server.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_Median_Net_Worth/MapServer",  "params":{"visible":true, "title":"USA Median Net Worth"}},
+		{"url":"//sampleserver6.arcgisonline.com/arcgis/rest/services/Toronto/ImageServer", "params":{"visible":true, "title":"Toronto Image Server"}},
+		{"url":"//server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer", "params":{"visible":false, "title":"Street Map"}},
+		{"url":"//server.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_Median_Net_Worth/MapServer/4", "params":{"visible":true, "title":"feature"}}
+	],
+	"layout":[{"title":"Left Pane", "src":"dijit/layout/ContentPane", "params":{"region":"left", "splitter":true, "style":"width:300px;"}, "startup":true, "content":[{
+			"id":"lpTabCointainer", "title":"Tab Container", "src":"dijit/layout/TabContainer", "startup":true, "content":[{
+				"id":"tocTab", "src":"dijit/layout/ContentPane", "params":{"title":"Map Contents"}, "content":[{
+					"id":"TOC", "title":"TOC", "src":"dijit/layout/ContentPane", "params":{"content":"Tab1"}}
+				]
+			}]
+		}]
+	}]
 }

@@ -43,8 +43,9 @@ define(["dojo/dom-construct", "dojox/layout/Dock", "dijit/layout/LayoutContainer
 			});
             new popupMenuItem({label:"Theme", popup:theme}).placeAt(this.appMenu);
             on(new checkedMenuItem({label:"Lock Taskbar", checked:this._locked}).placeAt(this.appMenu), "change", lang.hitch(this, function(flag){this._locked=flag; this._lockEvent.remove(); if(!flag){this._modifyHeight("3px");}}));
-            if(items.leftPane)
-                new checkedMenuItem({label:"Left Pane", checked:true, onChange:lang.hitch([this, items.leftPane], function(flag){this[0].getParent()[flag?"addChild":"removeChild"](this[1]);})}).placeAt(this.appMenu);
+            
+            /*if(items.leftPane)
+            	new checkedMenuItem({label:"Left Pane", checked:true, onChange:lang.hitch([this, items.leftPane], function(flag){this[0].getParent()[flag?"addChild":"removeChild"](this[1]);})}).placeAt(this.appMenu);*/
 		},
 		_initMapConfig:function(items){
 			if(items.ovw)
@@ -82,18 +83,17 @@ define(["dojo/dom-construct", "dojox/layout/Dock", "dijit/layout/LayoutContainer
             createPopup:function(){
 				if(!registry.byId(this.opt.id))
 				{
-					require([this.opt.src], lang.hitch(this, function(typ){
-						var hold=domConstruct.create("div", this.opt.popup);
-                        var source=new typ(this.opt.params, hold);
+					var hold=domConstruct.create("div", this.opt.popup);
+					imw.parseContent(this.opt.src, this.opt.params, lang.hitch(this, function(ctnt){
 						var pup=new popup({id:this.opt.id, title:this.opt.label, style:"top:100px; left:100px;", dockable:true, dockTo:this.opt.dock, content:hold}).placeAt(document.body);
 						domStyle.set(pup.containerNode, this.opt.popup);
 						pup.startup();
-						if(source.startup)
-							source.startup();
-					}));
+						if(ctnt.startup)
+							ctnt.startup();
+					}), hold);
 				}
 				else
-					registry.byId(this.opt.id).show().resize();
+					registry.byId(this.opt.id).show();
 			},
 			onClick:function(){this.createPopup();}
 		}),
