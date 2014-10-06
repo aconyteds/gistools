@@ -1,11 +1,11 @@
 define(["dojo/dom-construct", "dojox/layout/Dock", "dijit/layout/LayoutContainer", "dijit/layout/ContentPane", "dijit/form/DropDownButton", "dojo/_base/declare",
         "dijit/_WidgetBase","dijit/_TemplatedMixin","dijit/_WidgetsInTemplateMixin", "dojox/timing","dijit/Menu",  "dijit/MenuItem", "dijit/PopupMenuItem", "dijit/CheckedMenuItem",
         "dijit/RadioMenuItem", "dijit/DropDownMenu", "dojo/_base/lang", "dijit/registry", "dojo/on", "dojo/dom-class", "dojo/_base/fx", "dojo/fx/Toggler", "dojo/query", "custom/imw",
-        "dojo/_base/array","custom/popup","custom/searchBar", "dojo/text!./windows/windows.html"],
+        "dojo/_base/array","custom/popup","custom/searchBar", "dojo/dom-style", "dojo/text!./windows/windows.html"],
 		function(domConstruct, dock, layoutContainer, contentPane, dropDownButton, declare,
 				_widgetBase, _templatedMixin, _widgetsInTemplateMixin, time, menu, menuItem, popupMenuItem, checkedMenuItem,
 				radioMenuItem, dropDownMenu, lang, registry, on, domClass, fx, toggler, query, imw,
-				array, popup, searchBar, template){
+				array, popup, searchBar, domStyle, template){
 	imw.css("./custom/windows/windows.css");
 	imw.css("//js.arcgis.com/3.10/js/dojo/dojox/layout/resources/ResizeHandle.css");
 	return declare([_widgetBase, _templatedMixin, _widgetsInTemplateMixin],{
@@ -83,10 +83,13 @@ define(["dojo/dom-construct", "dojox/layout/Dock", "dijit/layout/LayoutContainer
 				if(!registry.byId(this.opt.id))
 				{
 					require([this.opt.src], lang.hitch(this, function(typ){
-                        var source=new typ(this.opt.params);
-						var pup=new popup({id:this.opt.id, title:this.opt.label, style:"top:100px; left:100px;", dockable:true, dockTo:this.opt.dock, content:source.domNode}).placeAt(document.body);
+						var hold=domConstruct.create("div", this.opt.popup);
+                        var source=new typ(this.opt.params, hold);
+						var pup=new popup({id:this.opt.id, title:this.opt.label, style:"top:100px; left:100px;", dockable:true, dockTo:this.opt.dock, content:hold}).placeAt(document.body);
+						domStyle.set(pup.containerNode, this.opt.popup);
 						pup.startup();
-						source.startup();
+						if(source.startup)
+							source.startup();
 					}));
 				}
 				else

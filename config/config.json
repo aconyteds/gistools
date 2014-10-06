@@ -16,8 +16,9 @@
 	"search":{},
 	"tools":[
 	{"id":"CONTENT", "label":"Content Popup", "src":"dijit/layout/ContentPane", "pinned":false, "params":{"content":"HELLO WORLD"}},
-	{"id":"bmGal", "label":"Basemaps", "src":"custom/basemapGallery", "pinned":true, "params":{"showArcGISBasemaps":true,"style":"width:300px; height:400px; overflow-x:hidden;"}},
-	{"id":"bookmark", "label":"Bookmarks", "src":"custom/bookmarks","pinned":false, "params":{"editable":true}}],
+	{"id":"bmGal", "label":"Basemaps", "src":"custom/basemapGallery", "pinned":false, "popup":{"style":"height:400px; width:300px; overflow-x:hidden;"}, "params":{"showArcGISBasemaps":true}},
+	{"id":"bookmark", "label":"Bookmarks", "src":"custom/bookmarks","pinned":false, "popup":{"style":"height:300px; width:235px; overflow-y:auto; overflow-x:hidden;"}, "params":{"editable":true, "bookmarks":[], "style":"border:none;"}},
+	{"id":"bm2", "label":"Esri BM", "src":"esri/dijit/Bookmarks", "pinned":false, "popup":{"style":"height:300px; width:235px; overflow-y:auto; overflow-x:hidden;"},"params":{"editable":true}}],
 	"imports":[],
 	"layers":[{"url":"//server.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer", "type":"basemap", "params":{"title":"Topo Map"}},
 	{"url":"//server.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_Median_Net_Worth/MapServer",  "params":{"visible":true, "title":"USA Median Net Worth"}},

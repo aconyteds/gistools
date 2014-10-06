@@ -37,14 +37,14 @@ Modify ./config/config.json for a truly customized experience.
 6. [x] dojox/FloatingPane maximize/restore button
 7. [x] Basemap Gallery
 8. [x] Layer loader
-9. [] Table of contents
+9. Table of contents
 10. [x] Dynamic Layer Loading
 11. [x] Loading Bar for map pan
-12. [] Routing application
-13. [] Search Bar
-14. [] Identity manager for secured layers
-15. [] Figure out how to use CORS better
-16. [] Integrate AGOL/Portal with application
+12. Routing application
+13. Search Bar
+14. Identity manager for secured layers
+15. Figure out how to use CORS better
+16. Integrate AGOL/Portal with application
 
 ## Known Bugs:
 - **11.19.13** dojox/FloatingPane docking does not work with current version of ESRI js API becuse of typo in dock code
@@ -53,7 +53,7 @@ Modify ./config/config.json for a truly customized experience.
     - **Fixed 10.3.14:** This occured again with version 3.10 of the JSAPI and reverting seemed to fix the problem.
 - **12.14.13** Layers cannot be loaded via HTTP when hosted on cloud 9
 - ~~**12.14.13** Basemap Gallery is not working due to http/https issues~~
-    - **10.3.14:** Issue seemed to be caused by trying to append BM Gallery directly to floating pane content node. Creating a containing Div solved problem.
+    - **Fixed: 10.3.14:** Issue seemed to be caused by trying to append BM Gallery directly to floating pane content node. Creating a containing Div solved problem.
 
 ### Improvements:
 - ~~Loading bar should have a scrolling background to indicate it is still doing something on longer loads~~

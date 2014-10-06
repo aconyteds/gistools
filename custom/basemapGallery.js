@@ -7,7 +7,6 @@ function(imw, basemapGallery, basemap, array, basemapLayer, declare, domConstruc
         postCreate:function(){
             var bms=[];
             imw.getRemoteValue("layers/type", lang.hitch(this, function(arr){
-                console.log(arr);
                 array.map(arr, lang.hitch(this, function(bm){
                     bms.push(this.createBasemap(bm));
                 }));
@@ -16,9 +15,7 @@ function(imw, basemapGallery, basemap, array, basemapLayer, declare, domConstruc
             var hold=domConstruct.create("div", {style:this.sytle});
             domConstruct.place(hold,this.domNode) 
             this.bmGallery=new basemapGallery(this.params, hold).startup();
-            //this.bmGallery.startup();
             array.map(this.basemaps, lang.hitch(this, function(bm){
-                console.log(bm);
                 this.basemapGallery.add(bm);
             }));
             topic.subscribe("new/basemap", lang.hitch(this, function(bm){
