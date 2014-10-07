@@ -5,18 +5,20 @@ function(imw, basemapGallery, basemap, array, basemapLayer, declare, domConstruc
         basemaps:[],
         bmGallery:null,
         postCreate:function(){
+            var hold=domConstruct.create("div", {style:this.sytle});
+            domConstruct.place(hold,this.domNode) 
+            this.bmGallery=new basemapGallery(this.params, hold);
+            this.bmGallery.startup();
             var bms=[];
-            imw.getRemoteValue("layers/type", lang.hitch(this, function(arr){
+            imw.getRemoteValue("layer/type", lang.hitch(this, function(arr){
                 array.map(arr, lang.hitch(this, function(bm){
-                    bms.push(this.createBasemap(bm));
+                    bms.push(this.createBasemap(bm[0]));
                 }));
             }), "basemap");
             this.basemaps=bms;
-            var hold=domConstruct.create("div", {style:this.sytle});
-            domConstruct.place(hold,this.domNode) 
-            this.bmGallery=new basemapGallery(this.params, hold).startup();
             array.map(this.basemaps, lang.hitch(this, function(bm){
-                this.basemapGallery.add(bm);
+                console.log(this);
+                this.bmGallery.add(bm);
             }));
             topic.subscribe("new/basemap", lang.hitch(this, function(bm){
                 this.bmGallery.add(this.createBasemap(bm));
@@ -24,9 +26,9 @@ function(imw, basemapGallery, basemap, array, basemapLayer, declare, domConstruc
         },
         createBasemap:function(bm){
             return new basemap({
-                layers:[typeof(bm.url)=="string"?new basemapLayer({url:bm.url}):array.forEach(bm.url, function(lyr){return new basemapLayer({url:lyr});})],
-                title:bm.src.title,
-                thumbnail:bm.src.thumbnail||""
+                layers:[typeof(bm.layer)=="string"?new basemapLayer({url:bm.layer}):array.forEach(bm.layer, function(lyr){return new basemapLayer({url:lyr});})],
+                title:bm.src.params.title,
+                thumbnailUrl:bm.src.params.thumbnail
             });
         }
 	});	
