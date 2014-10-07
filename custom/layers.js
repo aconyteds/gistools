@@ -4,6 +4,7 @@ define(["dojo/_base/declare", "custom/imw", "esri/layers/ArcGISDynamicMapService
 function(declare, imw, dynamicLayer, imageLayer, tiledLayer, featureLayer, kmlLayer, osmLayer, wmsLayer, wmtsLayer,  topic, lang, xhr, _widgetBase, array, Deferred, esriRequest, all, on){
     return declare([_widgetBase],{
         layers:[],
+        _connects:[],
         postMixInProperties:function(params){
             lang.mixin(this, params);
         },
@@ -27,35 +28,40 @@ function(declare, imw, dynamicLayer, imageLayer, tiledLayer, featureLayer, kmlLa
             on(this.params.map, "update-end", function(){
                 topic.publish("map/update/end", this);
             });
-            topic.subscribe("new/layer", lang.hitch(this, function(url, params, type, source){
+            this._connects.push(topic.subscribe("new/layer", lang.hitch(this, function(url, params, type, source){
                 if (type!=="basemap") {
                     this.buildLayer(url, params||null, type||null);
                 }
                 else
                 {
-                    this.layers.push({layer:url, type:type, params:params, src:source});
+                    this.layers.push({layer:url, type:type, src:source});
                     topic.publish("new/basemap", imw.top(this.layers));
                 }
-            }));
-            topic.subscribe("get/layer/total", lang.hitch(this, function(){
-                return this.layers.length;
-            }));
-            topic.subscribe("get/layer/type", lang.hitch(this, function(type){
-                var LYRS=array.map(this.layers, function(lyr){
+            })));
+            this._connects.push(topic.subscribe("get/layers", lang.hitch(this, function(){
+                topic.publish("return/layers", this.layers);
+            })));
+            this._connects.push(topic.subscribe("get/layer/total", lang.hitch(this, function(){
+                topic.publish("return/layer/total", this.layers.length);
+            })));
+            this._connects.push(topic.subscribe("get/layer/type", lang.hitch(this, function(type){
+                var LYRS=imw.remArr(array.map(this.layers, function(lyr){
                     if(lyr.type==type)
                         return lyr;
-                });
+                    else
+                        return "empty";
+                }), "empty", 1);
                 topic.publish("return/layer/type", LYRS);
-            }));
-            topic.subscribe("get/layer/index", lang.hitch(this, function(index){
+            })));
+            this._connects.push(topic.subscribe("get/layer/index", lang.hitch(this, function(index){
                 var LYRS=this.layers[index];
                 topic.publish("return/layer/index", LYRS);
-            }));
-            topic.subscribe("layer/update/start", function(layer){
+            })));
+            this._connects.push(topic.subscribe("layer/update/start", function(layer){
                 on.once(layer, "update-end", function(){
                     topic.publish("layer/update/end", layer);
                 });
-            });
+            }));
         },
         _layerType:function(type){
             switch(type.toLowerCase())
@@ -119,6 +125,11 @@ function(declare, imw, dynamicLayer, imageLayer, tiledLayer, featureLayer, kmlLa
             else{//all needed attributes are known, create layer and attach to map
                 this.layers.push({layer:new this._layerType(type)(url, params||null), type:type});
                 this.map.addLayer(imw.top(this.layers).layer);
+            }
+        },
+        destroy:function(){
+            while(this._connects.length){
+                this._connects.pop();
             }
         }
     });
