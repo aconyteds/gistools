@@ -14,10 +14,11 @@ define(["dojo/dom-construct", "dojo/topic", "dojo/_base/array"], function(domCon
                 if(array.indexOf(arr, val)===-1 && rec)
                     rec=0;
             }while(rec)
+            return arr;
 		},
 		getRemoteValue:function(method, callback, prop1, prop2, prop3, prop4)
 		{
-            var tempTpc=topic.subscribe("return/"+method, function(){tempTpc.remove(); console.log(arguments); callback(arguments); });
+            var tempTpc=topic.subscribe("return/"+method, function(){tempTpc.remove(); callback(arguments); });
             topic.publish("get/"+method, prop1, prop2||null, prop3||null, prop4||null);
 		},
 		parseContent:function(type, params, callback, srcNode){
