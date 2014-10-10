@@ -1,0 +1,23 @@
+<div>
+    <div data-dojo-attach-point="LoginOverlay" class="${baseClass}LoginOverlay">
+        <div >
+            <div >
+                <div >
+                    <span class="LoginFieldContainer">
+                        <label for="portal">Portal Url:</label>
+                        <input name="portal" type="url" data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="pUrl" value="${portalUrl}" data-dojo-attach-event="onKeyPress:_onKeyPress">
+                        </input>
+                    </span>
+                    <button data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick:_login">
+                        <span>Login to Portal!</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div data-dojo-attach-point="itemInterface" class="${baseClass}ItemInterface">
+        <div>Welcome, <span data-dojo-attach-point="user"></span>!</div>
+        
+    </div>
+</div>
