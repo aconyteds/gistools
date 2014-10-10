@@ -1,0 +1,1 @@
+.centerVertical{position:absolute;top:0;height:100%}.centerVertical>:first-child{position:relative;height:2000px;line-height:2000px;top:50%;margin-top:-1000px}.centerVertical>:first-child>:first-child{display:inline;vertical-align:middle;line-height:0}.centerVertical>:first-child>:first-child>:first-child{display:inline-block}

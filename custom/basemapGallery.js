@@ -4,9 +4,15 @@ function(imw, basemapGallery, basemap, array, basemapLayer, declare, domConstruc
 	return declare([_widgetBase],{
         basemaps:[],
         bmGallery:null,
+        postMixInProperties:function(){
+            imw.getRemoteValue("portal/BasemapGalleryGroup", lang.hitch(this, function(data){
+                if(data)
+                    lang.mixin(this.params, {basemapsGroup: data[0]});
+            }));
+        },
         postCreate:function(){
             var hold=domConstruct.create("div", {style:this.sytle});
-            domConstruct.place(hold,this.domNode) 
+            domConstruct.place(hold,this.domNode);
             this.bmGallery=new basemapGallery(this.params, hold);
             this.bmGallery.startup();
             var bms=[];
@@ -17,7 +23,6 @@ function(imw, basemapGallery, basemap, array, basemapLayer, declare, domConstruc
             }), "basemap");
             this.basemaps=bms;
             array.map(this.basemaps, lang.hitch(this, function(bm){
-                console.log(this);
                 this.bmGallery.add(bm);
             }));
             topic.subscribe("new/basemap", lang.hitch(this, function(bm){

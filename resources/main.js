@@ -23,6 +23,9 @@ function (Map, xhr, parser,domConstruct,array, lang, borderContainer, contentPan
 	    });
 		new contentPane({region:"center"}, "mapContainer");
 		main.map=new Map("map", data.map);
+		topic.subscribe("get/map", function(){
+			topic.publish("return/map", main.map);
+		});
 		if(data.loadingIndicator.visible===true)
 		{
             var loadingIndicator=new loading().placeAt("mapContainer", "last");

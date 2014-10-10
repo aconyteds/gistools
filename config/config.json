@@ -24,17 +24,21 @@
 	],
 	"imports":[],
 	"layers":[
-		{"url":"//server.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer", "type":"basemap", "params":{"title":"Topo Map"}},
+		{"url":"//server.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer", "type":"basemap", "params":{"title":"Topo Map", "thumbnail":"./images/cat.jpg"}},
 		{"url":"//server.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_Median_Net_Worth/MapServer",  "params":{"visible":true, "title":"USA Median Net Worth"}},
 		{"url":"//sampleserver6.arcgisonline.com/arcgis/rest/services/Toronto/ImageServer", "params":{"visible":true, "title":"Toronto Image Server"}},
 		{"url":"//server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer", "params":{"visible":false, "title":"Street Map"}},
 		{"url":"//server.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_Median_Net_Worth/MapServer/4", "params":{"visible":true, "title":"feature"}}
 	],
-	"layout":[{"title":"Left Pane", "src":"dijit/layout/ContentPane", "params":{"region":"left", "splitter":true, "style":"width:300px;"}, "startup":true, "content":[{
+	"layout":[{"title":"Left Pane", "src":"dijit/layout/ContentPane", "params":{"region":"left", "splitter":true, "style":"width:350px;"}, "startup":true, "content":[{
 			"id":"lpTabCointainer", "title":"Tab Container", "src":"dijit/layout/TabContainer", "startup":true, "content":[{
+				"id":"AGOLTab", "src":"dijit/layout/ContentPane", "params":{"title":"ArcGIS Online"}, "content":[{
+					"id":"AGOL", "src":"custom/AGOL", "params":{"AGOLappId":"249Bps3mRggb4ELR", "popup":true, "portalUrl":"https://dcservices.maps.arcgis.com"}
+				}]
+			},{
 				"id":"tocTab", "src":"dijit/layout/ContentPane", "params":{"title":"Map Contents"}, "content":[{
-					"id":"TOC", "title":"TOC", "src":"dijit/layout/ContentPane", "params":{"content":"Tab1"}}
-				]
+					"id":"TOC", "title":"TOC", "src":"custom/TOC", "params":{"content":"Tab1"}
+				}]
 			}]
 		}]
 	}]
